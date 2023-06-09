@@ -1,3 +1,4 @@
+/*
 const admin = require("../config/firebase.config");
 const song = require("../models/song");
 const user = require("../models/user");
@@ -155,3 +156,4 @@ const updateUserData = async (decodeValue, req, res) => {
 };
 
 module.exports = router;
+*/
