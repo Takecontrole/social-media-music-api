@@ -34,8 +34,6 @@ router.post("/save", async (req, res) => {
   const newArtist = artist({
     name: req.body.name,
     imageURL: req.body.imageURL,
-    twitter: req.body.twitter,
-    instagram: req.body.instagram,
   });
   try {
     const savedArtist = await newArtist.save();
@@ -57,8 +55,6 @@ router.put("/update/:updateId", async (req, res) => {
       {
         name: req.body.name,
         imageURL: req.body.imageURL,
-        twitter: req.body.twitter,
-        instagram: req.body.instagram,
       },
       options
     );

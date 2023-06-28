@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const SongSchema = mongoose.Schema(
   {
+    id: {
+      type: Number,
+      
+    },
     name: {
       type: String,
       required: true,
@@ -20,15 +24,15 @@ const SongSchema = mongoose.Schema(
     },
     artist: {
       type: String,
-      required: true,
+      
     },
     language: {
       type: String,
-      required: true,
+      
     },
     category: {
       type: String,
-      required: true,
+      
     },
   },
   { timestamps: true }

@@ -1,5 +1,5 @@
 const song = require("../models/song");
-
+const { default: mongoose } = require("mongoose");
 const router = require("express").Router();
 
 router.get("/getAll", async (req, res) => {
@@ -30,8 +30,32 @@ router.get("/getOne/:getOne", async (req, res) => {
   }
 });
 
+const counterSchema={
+  id: {
+    type:String
+  },
+  seq:{
+    type:Number
+  }
+}
+const countermodel=mongoose.model("counter", counterSchema);
 router.post("/save", async (req, res) => {
-  const newSong = song({
+  
+  countermodel.findOneAndUpdate(
+  {id:"autoval"},
+  {"$inc":{"seq":1}},
+  {new:true},(err,cd)=>{
+let seqId;
+    if (cd==null)
+    {
+      const newval=new countermodel({id:"autoval",seq:1})
+      newval.save()
+      seqId=1
+    }else{ 
+      seqId=cd.seq
+    }
+    const newSong = song({
+    id:seqId,
     name: req.body.name,
     imageURL: req.body.imageURL,
     songUrl: req.body.songUrl,
@@ -40,13 +64,11 @@ router.post("/save", async (req, res) => {
     language: req.body.language,
     category: req.body.category,
   });
-  try {
-    const savedSong = await newSong.save();
-    res.status(200).send({ song: savedSong });
-  } catch (error) {
-    res.status(400).send({ success: false, msg: error });
-  }
-});
+  newSong.save()
+}
+);
+})
+  
 
 router.put("/update/:updateId", async (req, res) => {
   const filter = { _id: req.params.updateId };
